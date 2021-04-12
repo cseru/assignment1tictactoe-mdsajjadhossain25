@@ -136,7 +136,7 @@ public class Game {
                 turn = 'x';
             }
         }
-        return;
+       // return;
     }
 
 
@@ -151,6 +151,63 @@ public class Game {
     public String checkGameWinner(char [][]grid){
         String result = "None";
         //Student code goes here ...
+
+        boolean xWin = false , oWin = false , tie = false ;
+        int gameCounter = 0;
+
+        for(int i=0 ; i < 3 ; i++){
+            int xCntVert = 0 , xCntHor = 0 , yCntVert = 0 , yCntHor = 0;
+            tie = false;
+
+            for(int j = 0 ; j < 3 ; j++){
+                if(grid[i][j] == 'x'){
+                    xCntHor++;
+                }
+                if(grid[j][i] == 'x'){
+                    xCntVert += 1;
+                }
+                if(grid[i][j] == 'o'){
+                    yCntHor += 1;
+                }
+                if(grid[j][i] == 'o') {
+                    yCntVert += 1;
+                }
+                if(grid[i][j] != '-'){
+                    gameCounter +=1;
+                }
+            }
+
+            if(xCntVert == 3 || xCntHor == 3){
+                xWin = true;
+                break;
+            }else if(yCntVert == 3 || yCntHor == 3){
+                oWin = true;
+                break;
+            }else{
+                tie = true;
+            }
+        }
+        if(( grid[0][0] == 'x' && grid[1][1] == 'x' && grid[2][2] == 'x' )
+                || ( grid[2][0] == 'x' && grid[1][1] == 'x' && grid[0][2] == 'x' )){
+            xWin = true;
+        }else if(( grid[0][0] == 'o' && grid[1][1] == 'o' && grid[2][2] == 'o' )
+                || ( grid[2][0] == 'o' && grid[1][1] == 'o' && grid[0][2] == 'o' )){
+            oWin = true;
+        }
+
+        if( xWin ){
+            result = "x wins";
+        }
+
+        if( oWin ) {
+            result = "o wins";
+        }
+
+        if(gameCounter == 9){ // if gameCounter == 9 it means game completed;
+            if(tie){
+                result = "tie";
+            }
+        }
         return result;
     }
 
@@ -158,7 +215,7 @@ public class Game {
      * Main function
      * @param args command line arguments
      */
-    public static void main(String args[]){
+    public static void main(String[] args){
         Game game = new Game();
         gui = new GameUI(game);
     }
