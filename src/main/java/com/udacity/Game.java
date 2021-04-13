@@ -136,7 +136,7 @@ public class Game {
                 turn = 'x';
             }
         }
-        return;
+       // return;
     }
 
 
@@ -149,78 +149,73 @@ public class Game {
      * @return String indicating the outcome of the game: "X wins" or "O wins" or "Tie" or "None"
      */
     public String checkGameWinner(char [][]grid){
-        public String checkGameWinner(char [][]grid)
-        {
-            String result = "None";
-            boolean b;
-            int c= 0;
-            for(int i=0 ; i < 3 ; i++)
-            {
-                int x1 = 0 , x2 = 0 , y1 = 0 , y2 = 0;
-                b = false;
+        String result = "None";
+        //Student code goes here ...
 
-                for(int j = 0 ; j < 3 ; j++)
-                {
-                    if(grid[i][j] == 'x')
-                    {
-                        x1++;
-                    }
-                    if(grid[j][i]== 'x')
-                    {
-                        x2++;
-                    }
-                    if(grid[i][j]=='o')
-                    {
-                        y1++;
-                    }
-                    if(grid[j][i]=='o')
-                    {
-                        y2++;
-                    }
-                    if(grid[i][j]!='-')
-                    {
-                        c++;
-                    }
+        boolean xWin = false , oWin = false , tie = false ;
+        int gameCounter = 0;
+
+        for(int i=0 ; i < 3 ; i++){
+            int xCntVert = 0 , xCntHor = 0 , yCntVert = 0 , yCntHor = 0;
+            tie = false;
+
+            for(int j = 0 ; j < 3 ; j++){
+                if(grid[i][j] == 'x'){
+                    xCntHor++;
                 }
-                if(x1==3 || x2==3)
-                {
-                    return "x wins";
+                if(grid[j][i] == 'x'){
+                    xCntVert += 1;
                 }
-                else if(y1==3 || y2==3)
-                {
-                    return "o wins";
+                if(grid[i][j] == 'o'){
+                    yCntHor += 1;
                 }
-                else
-                {
-                    b=true;
+                if(grid[j][i] == 'o') {
+                    yCntVert += 1;
+                }
+                if(grid[i][j] != '-'){
+                    gameCounter +=1;
                 }
             }
-            if(( grid[0][0]=='x' && grid[1][1]=='x' && grid[2][2]== 'x' )
-                    || ( grid[2][0]== 'x' && grid[1][1]== 'x' && grid[0][2]== 'x' ))
-            {
-                return "x wins";
+
+            if(xCntVert == 3 || xCntHor == 3){
+                xWin = true;
+                break;
+            }else if(yCntVert == 3 || yCntHor == 3){
+                oWin = true;
+                break;
+            }else{
+                tie = true;
             }
-            else if(( grid[0][0]=='o' && grid[1][1]=='o' && grid[2][2]== 'o' )
-                    || ( grid[2][0]=='o' && grid[1][1] =='o' && grid[0][2]== 'o' ))
-            {
-                return "o wins";
-            }
-            if(c==9)
-            {
-                if(b==true)
-                {
-                    return "tie";
-                }
-            }
-            return result;
         }
+        if(( grid[0][0] == 'x' && grid[1][1] == 'x' && grid[2][2] == 'x' )
+                || ( grid[2][0] == 'x' && grid[1][1] == 'x' && grid[0][2] == 'x' )){
+            xWin = true;
+        }else if(( grid[0][0] == 'o' && grid[1][1] == 'o' && grid[2][2] == 'o' )
+                || ( grid[2][0] == 'o' && grid[1][1] == 'o' && grid[0][2] == 'o' )){
+            oWin = true;
+        }
+
+        if( xWin ){
+            result = "x wins";
+        }
+
+        if( oWin ) {
+            result = "o wins";
+        }
+
+        if(gameCounter == 9){ // if gameCounter == 9 it means game completed;
+            if(tie){
+                result = "tie";
+            }
+        }
+        return result;
     }
 
     /**
      * Main function
      * @param args command line arguments
      */
-    public static void main(String args[]){
+    public static void main(String[] args){
         Game game = new Game();
         gui = new GameUI(game);
     }
