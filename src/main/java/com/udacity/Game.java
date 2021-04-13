@@ -149,9 +149,71 @@ public class Game {
      * @return String indicating the outcome of the game: "X wins" or "O wins" or "Tie" or "None"
      */
     public String checkGameWinner(char [][]grid){
-        String result = "None";
-        //Student code goes here ...
-        return result;
+        public String checkGameWinner(char [][]grid)
+        {
+            String result = "None";
+            boolean b;
+            int c= 0;
+            for(int i=0 ; i < 3 ; i++)
+            {
+                int x1 = 0 , x2 = 0 , y1 = 0 , y2 = 0;
+                b = false;
+
+                for(int j = 0 ; j < 3 ; j++)
+                {
+                    if(grid[i][j] == 'x')
+                    {
+                        x1++;
+                    }
+                    if(grid[j][i]== 'x')
+                    {
+                        x2++;
+                    }
+                    if(grid[i][j]=='o')
+                    {
+                        y1++;
+                    }
+                    if(grid[j][i]=='o')
+                    {
+                        y2++;
+                    }
+                    if(grid[i][j]!='-')
+                    {
+                        c++;
+                    }
+                }
+                if(x1==3 || x2==3)
+                {
+                    return "x wins";
+                }
+                else if(y1==3 || y2==3)
+                {
+                    return "o wins";
+                }
+                else
+                {
+                    b=true;
+                }
+            }
+            if(( grid[0][0]=='x' && grid[1][1]=='x' && grid[2][2]== 'x' )
+                    || ( grid[2][0]== 'x' && grid[1][1]== 'x' && grid[0][2]== 'x' ))
+            {
+                return "x wins";
+            }
+            else if(( grid[0][0]=='o' && grid[1][1]=='o' && grid[2][2]== 'o' )
+                    || ( grid[2][0]=='o' && grid[1][1] =='o' && grid[0][2]== 'o' ))
+            {
+                return "o wins";
+            }
+            if(c==9)
+            {
+                if(b==true)
+                {
+                    return "tie";
+                }
+            }
+            return result;
+        }
     }
 
     /**
